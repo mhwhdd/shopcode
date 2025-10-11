@@ -29,7 +29,7 @@ class OrderGoods(models.Model):
     trade_no = models.CharField(max_length=255, blank=True, null=True)
     sku_id = models.CharField(max_length=255, blank=True, null=True)
     goods_num = models.IntegerField(blank=True, null=True)
-    create_time = models.DateTimeField(blank=True, null=True)
+    # create_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
