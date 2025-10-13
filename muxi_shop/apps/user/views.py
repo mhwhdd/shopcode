@@ -1,9 +1,11 @@
 
 from django.http import JsonResponse
+from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from  apps.user.models import User
 from apps.user.serializers import UserSerializer
 from utils.ResponseMessage import UserResponse
+from utils.jwt_auth import create_token
 from utils.password_encode import get_md5
 
 
@@ -42,3 +44,35 @@ class UserAPIView(APIView):
         except Exception as e:
             print(e)
             return UserResponse.failed("用户信息获取失败")
+
+class LoginView(GenericAPIView):
+    def post(self, request):
+        return_data = {}
+        request_data = request.data
+        email = request_data.get("username")
+        try:
+            user_data = User.objects.get(email=email)
+        except Exception:
+            return UserResponse.other("用户名或者是密码错误1")
+        if not user_data:
+            return UserResponse.other("用户名或者是密码错误1")
+
+        # if not user_data:
+        #     return UserResponse.other("用户名或者密码错误")
+        else:
+            print("=============")
+            user_ser = UserSerializer(instance=user_data,many=False)
+            user_password = request_data.get('password')
+            md5_user_password = get_md5(user_password)
+            # 数据库的密码
+            db_user_password = user_ser.data['password']
+            if md5_user_password != db_user_password:
+                return UserResponse.other("用户名或者密码错误")
+            else:
+                token_info = {
+                    "username":email
+                }
+                token_data = create_token(token_info)
+                return_data['token'] = token_data
+                return_data['username'] = user_ser.data['name']
+                return UserResponse.success(return_data)
