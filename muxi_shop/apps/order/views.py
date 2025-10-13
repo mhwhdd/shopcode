@@ -8,8 +8,8 @@ from apps.order.serializers import OrderGoodsSerializer
 
 # Create your views here.
 class OrderGoodsGenericAPIView(GenericAPIView):
-    queryset = OrderGoods.objects.all()
-    serializer_class = OrderGoodsSerializer
+    queryset = OrderGoods.objects.all() # 查询所有字段
+    serializer_class = OrderGoodsSerializer # 序列化所有
     def post(self, request, *args, **kwargs):
         # trade_no = request.GET.get('trade_no')
         # print(self.get_queryset())
@@ -21,7 +21,7 @@ class OrderGoodsGenericAPIView(GenericAPIView):
         return JsonResponse({"code":200, "msg":"success"})
         self.get_queryset()
         self.get_serializer()
-    lookup_field = 'trade_no'
+    lookup_field = 'trade_no' # 作为请求条件
     def get(self, request,trade_no):
         # self.get_serializer(instance=self.get_queryset(), many=True) # 完成整个查询
         # return JsonResponse(self.get_serializer(instance=self.get_queryset(), many=True).data,safe=False)

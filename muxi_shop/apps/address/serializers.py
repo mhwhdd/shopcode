@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from apps.order.models import OrderGoods
+from apps.address.models import UserAddress
 from muxi_shop.settings import IMAGE_URL
 
 
 # from muxi_shop_api2.settings import IMAGE_URL
 
 
-class OrderGoodsSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderGoods
+        model = UserAddress
         fields = "__all__"
