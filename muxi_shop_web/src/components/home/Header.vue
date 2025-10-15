@@ -2,14 +2,9 @@
   <div class="mainheader">
     <div class="content">
       <div class="logo">
-        <!-- <Logo></Logo> -->
         <img src="@/assets/images/logo/logo-big.png" alt="" srcset="" />
       </div>
       <div class="serach-box">
-        <!-- <el-button type="primary">Primary</el-button> -->
-        <!-- <el-icon size="30">
-          <Edit />
-        </el-icon> -->
         <div class="input-search">
           <SearchBox></SearchBox>
         </div>
@@ -21,8 +16,6 @@
   </div>
 </template>
 <script setup>
-// import { ref } from "vue";
-// import Logo from "@/components/Logo";
 import SearchBox from "@/components/home/SearchBox";
 </script>
 <style scoped lang="scss">
@@ -35,7 +28,6 @@ import SearchBox from "@/components/home/SearchBox";
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
     position: relative;
     .logo {
       img {
@@ -46,9 +38,6 @@ import SearchBox from "@/components/home/SearchBox";
     }
     .serach-box {
       width: 800px;
-      //   display: flex;
-      //   justify-content: space-between;
-      //   align-items: center;
     }
     .right {
       //   background-color: red;

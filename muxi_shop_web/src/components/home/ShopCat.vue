@@ -12,14 +12,14 @@ import { ref } from "vue";
 <style scoped lang="scss">
 .shopcat {
   margin-left: 10px;
-  margin-top: -10px;
+  margin-top: -30px;
   height: 35px;
   background-color: #f9f9f9;
   border: 1px solid #dfdfdf;
   display: flex;
   justify-items: center;
   justify-content: center;
-  padding: 0 10px;
+  padding: 0px 20px;
   cursor: pointer;
   .item {
     // background-color: red;
