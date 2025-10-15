@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +50,6 @@ INSTALLED_APPS = [
     'pay',
     'user',
     'rest_framework',
-    'corsheaders',
 ]
 # 解决跨域的一个插件
 # pip install django-cors-headers
@@ -58,6 +58,7 @@ CORS_ORIGIN_ALLOW_ALL=True
 # 允许携带cookie
 CORS_ALLOW_CREDENTIALS=True
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 尽量放在最前面
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -6,7 +6,7 @@ from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateMo
 
 from apps.address.models import UserAddress
 from apps.address.serializers import AddressSerializer
-from utils.jwt_auth import JwtQueryParamAuthentication
+from utils.jwt_auth import JwtQueryParamAuthentication, JwtHeaderAuthentication
 
 
 # Create your views here.
@@ -18,9 +18,13 @@ class AddressGenericAPIView(GenericAPIView,
     # 继承 CreateModelMixin 封装实现创建保存功能
     queryset = UserAddress.objects.all()
     serializer_class = AddressSerializer
+    # authentication_classes = [JwtQueryParamAuthentication,]
+    # authentication_class = [JwtHeaderAuthentication,]
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
     def get(self, request, pk):
+        if not request.user.get("status"):
+            return JsonResponse(request.user, safe=False)
         # 继承 RetrieveModelMixin 封装实现单个查询功能 pk 主键
         return self.retrieve(request,pk)
     def put(self, request,pk):
@@ -34,14 +38,15 @@ class AddressListGenericAPIView(GenericAPIView,
                                  ListModelMixin,):
     queryset = UserAddress.objects.all()
     serializer_class = AddressSerializer
-    authentication_classes = [JwtQueryParamAuthentication,]
-    # authentication_classes = (JwtQueryParamAuthentication)
+    # authentication_classes = [JwtQueryParamAuthentication,]
+    # authentication_class = [JwtHeaderAuthentication,]
+
     def get(self,request):
         # 继承 ListModelMixin 封装实现请求多个
         # 拿到token验证返回的第一个值
-        print(request.user)
+        # print(request.user)
         # 拿到token返回的第二个值
-        print(request.auth)
+        # print(request.auth)
         if not request.user.get("status"):
             return JsonResponse(request.user, safe=False)
         return self.list(request)

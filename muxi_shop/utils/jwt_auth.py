@@ -27,13 +27,13 @@ def get_payload(token):
         result['status'] = True
         result['data'] = payload
     except jwt.exceptions.DecodeError:
-        print("token验证失败了")
+        # print("token验证失败了")
         result['error'] = "token验证失败了"
     except jwt.exceptions.ExpiredSignatureError:
-        print("token已经失效了")
+        # print("token已经失效了")
         result['error'] = "token已经失效了"
     except jwt.exceptions.InvalidTokenError:
-        print("无效的、非法的token")
+        # print("无效的、非法的token")
         result['error'] = "无效的、非法的token"
     return result
 
@@ -47,3 +47,14 @@ class JwtQueryParamAuthentication(BaseAuthentication):
         # if not result_payload['status']:
         return (result_payload, token)
 
+# 用户在Header中进行token的参数配置
+class JwtHeaderAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        # 从头信息中拿到token
+        # print(request.META)
+        # token = request.META.get("HTTP_TOKEN")  postman中这样获取
+        token = request.META.get("HTTP_AUTHORIZATION")  # 谷歌浏览器中这样获取
+        # print("3333{}".format(token))
+        result_payload = get_payload(token)
+        # print(result_payload)
+        return (result_payload,token)
