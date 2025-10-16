@@ -30,3 +30,11 @@ class GoodsDetailAPIView(APIView):
         result = GoodsSerializer(instance=goods_data)
 
         return ResponseMessage.GoodsResponse.success(result.data)
+
+class GoodsFindAPIView(APIView):
+    def get(self, request):
+       
+        goods_data = Goods.objects.filter(find=1).all()
+        print("goods_data==={}".format(goods_data))
+        result = GoodsSerializer(instance=goods_data,many=True)
+        return ResponseMessage.GoodsResponse.success(result.data)

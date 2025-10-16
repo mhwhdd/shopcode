@@ -12,7 +12,7 @@ import LeftMenu from "./LeftMenu.vue";
 <style scoped lang="scss">
 .nav {
   .main {
-    width: 1200px;
+    // width: 1200px;
     height: 500px;
     // border: 1px solid red;
     margin: 0 auto;
