@@ -34,13 +34,23 @@ class SubMenu(models.Model):
     sub_menu_type = models.CharField(max_length=255, blank=True, null=True)
     sub_menu_name = models.CharField(max_length=255, blank=True, null=True)
     sub_menu_url = models.CharField(max_length=255, blank=True, null=True)
+
     def __str__(self):
         result = {}
         result['main_menu_id'] = self.main_menu_id
         result['sub_menu_id'] = self.sub_menu_id
         result['sub_menu_type'] = self.sub_menu_type
-        result = json.dumps(result, ensure_ascii=False)
-        return result
+
+        # 关键检查：如果 sub_menu_name 是字节类型，则解码为字符串
+        if isinstance(self.sub_menu_name, bytes):
+            result['sub_menu_name'] = self.sub_menu_name.decode('utf-8')  # 使用正确的编码，如 'gbk' 等
+        else:
+            result['sub_menu_name'] = self.sub_menu_name  # 已经是字符串，则直接使用
+
+        result['sub_menu_url'] = self.sub_menu_url
+
+        result_str = json.dumps(result, ensure_ascii=False)  # 避免中文被转为 Unicode 转义序列 [3,5](@ref)
+        return result_str
     class Meta:
         managed = False
         db_table = 'sub_menu'

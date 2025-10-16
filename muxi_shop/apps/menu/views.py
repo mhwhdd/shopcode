@@ -37,6 +37,7 @@ class GoodsSubMenu(View):
         param_id = request.GET["main_menu_id"]
         # 拿到二级菜单的内容
         sub_menu = SubMenu.objects.filter(main_menu_id=param_id)
+        print(sub_menu)
         result_list = []
         # result_json = {}
         for m in sub_menu:

@@ -1,11 +1,10 @@
 <template>
-  <div class="leftmenu">
+  <div @mouseleave="noItem()" class="leftmenu">
     <div class="mlist">
       <div
         v-for="(item, index) in mainMenu"
         class="mitem"
         @mouseover="showItem(index)"
-        @mouseleave="noItem()"
       >
         <div v-for="(child, i) in item.children" class="child">
           <div class="ctxt">{{ child.main_menu_name }}</div>
@@ -15,18 +14,27 @@
         </div>
       </div>
     </div>
-    <div v-if="isShowItem" class="second-item">
-      <SecondMenu></SecondMenu>
+    <div
+      v-if="isShowItem"
+      class="second-item"
+      @mouseover="isShowItem = true"
+      @mouseleave="noItem()"
+    >
+      <SecondMenu
+        :scdata="scdata"
+        :showSecondMenuIndex="showSecondMenuIndex"
+      ></SecondMenu>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
-import { getMainMenu } from "@/network/home";
+import { getMainMenu, getSecondMenu } from "@/network/home";
 import SecondMenu from "./SecondMenu.vue";
 let mainMenu = ref([]);
 let isShowItem = ref(false);
 let showSecondMenuIndex = ref(0);
+let scdata = ref(null);
 getMainMenu().then((res) => {
   let list = [];
   if (res.data) {
@@ -55,8 +63,57 @@ function mergeMenus(menus) {
   // 将映射表对象转换为结果数组
   return Object.values(mergedMap);
 }
+function categorizeDataWithMap(data) {
+  const idMap = new Map();
+
+  data.forEach((item) => {
+    const id = item.sub_menu_id;
+    const type = item.sub_menu_type === "channel" ? "channel" : "dt";
+
+    if (!idMap.has(id)) {
+      idMap.set(id, {
+        sub_menu_id: id,
+        children: new Map(),
+      });
+    }
+
+    const idGroup = idMap.get(id);
+
+    if (!idGroup.children.has(type)) {
+      const newTypeGroup = {
+        sub_menu_type: type,
+        lists: [],
+      };
+      if (type === "dt") {
+        newTypeGroup.sub_menu_name = item.sub_menu_name;
+        newTypeGroup.sub_menu_url = item.sub_menu_url;
+      }
+      idGroup.children.set(type, newTypeGroup);
+    }
+
+    const typeGroup = idGroup.children.get(type);
+    typeGroup.lists.push({
+      sub_menu_name: item.sub_menu_name,
+      sub_menu_url: item.sub_menu_url,
+    });
+  });
+
+  // 转换为目标格式
+  return Array.from(idMap.values()).map((group) => ({
+    ...group,
+    children: Array.from(group.children.values()),
+  }));
+}
 const showItem = (index) => {
   isShowItem.value = true;
+  getSecondMenu(index).then((res) => {
+    let data = res.data.map((item) => {
+      return JSON.parse(item);
+    });
+    // console.log(data);
+    scdata.value = categorizeDataWithMap(data);
+    // console.log(test);
+  });
 };
 const noItem = () => {
   isShowItem.value = false;
