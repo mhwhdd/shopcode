@@ -10,7 +10,10 @@ from utils import ResponseMessage
 class GoodsCategoryAPIView(APIView):
     def get(self, request,category_id,page):
         current_page = (int(page) - 1)*20
-        end_page = int(current_page)*20
+        end_page = int(page)*20
+        print("current_page==={}".format(current_page))
+        print("category_id==={}".format(category_id))
+
         category_data = Goods.objects.filter(type_id=category_id).all()[current_page:end_page]
         print("category_data==={}".format(category_data))
 

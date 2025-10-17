@@ -9,8 +9,8 @@
     <!-- <div class="find-goods">
       <FindGoods></FindGoods>
     </div> -->
-    <div class="category clearfix">
-      <div class="content fl" v-for="(item, index) in category" :key="index">
+    <div class="category">
+      <div class="cateitem" v-for="(item, index) in category" :key="index">
         <div @click="toCategory(item.typeId)">
           <div
             class="category-title"
@@ -24,6 +24,7 @@
           >
             {{ item.content }}
           </div>
+          <div class="line"></div>
         </div>
       </div>
     </div>
@@ -37,6 +38,7 @@ import Header from "@/components/home/Header.vue";
 import Navigation from "@/components/home/Navigation.vue";
 import Banner from "@/components/home/Banner.vue";
 import FindGoods from "@/components/home/FindGoods.vue";
+import Category from "@/components/home/Category.vue";
 import { ref } from "vue";
 let category = ref([
   { typeId: 1, title: "精选", content: "猜你喜欢", selected: true },
@@ -49,6 +51,8 @@ let category = ref([
 let categoryId = ref(1);
 const toCategory = (typeId) => {
   categoryId.value = typeId;
+  console.log(typeId);
+
   for (let i in category.value) {
     category.value[i].selected = false;
     if (typeId == parseInt(i) + 1) {
@@ -61,7 +65,8 @@ const toCategory = (typeId) => {
 .home {
   width: 100%;
   background-color: #f5f6fa;
-  min-height: 100vh;
+  min-height: 150vh;
+  overflow-y: auto;
   .content {
     width: 1200px;
     height: 500px;
@@ -69,50 +74,65 @@ const toCategory = (typeId) => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    .category {
-      width: var(--content-width);
-      margin: 0 auto;
-      background-color: #fff;
-      height: 70px;
-      text-align: center;
-      .content {
-        width: 198px;
-        margin-top: 10px;
-        &:not(:last-child) {
-          border-right: 1px solid #e8e8e8;
-        }
-        .category-title {
-          font-size: 16px;
-          font-weight: 700;
-          height: 30px;
-          line-height: 30px;
-        }
+  }
+  .category {
+    width: var(--content-width);
+    margin: 0 auto;
+    background-color: #fff;
+    height: 70px;
+    // text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    .cateitem {
+      width: 180px;
+      height: 100%;
+      // border: 1px solid red;
+      margin: 0 5px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .line {
+        width: 2px;
+        height: 30%;
+        background-color: #999;
+        position: absolute;
+        right: 0;
+        top: 35%;
+      }
+      &:hover {
+        .category-title,
         .category-content {
-          font-size: 14px;
-          color: #999;
-        }
-        &:hover {
           cursor: pointer;
-          color: #e1251b;
-        }
-        &:hover div:last-child {
-          cursor: pointer;
-          color: #e1251b;
-        }
-        > div {
-          width: 80px;
-          margin: 0 auto;
-        }
-        .selected_title {
-          background-color: #e1251b;
-          color: #fff;
-          border-radius: 15px;
-        }
-        .selected_content {
           color: #e1251b;
         }
       }
+      .category-title {
+        cursor: pointer;
+        color: #333333;
+        font-size: 16px;
+        text-align: center;
+        line-height: 30px;
+      }
+      .category-content {
+        color: #999;
+        text-align: center;
+      }
     }
+
+    .selected_title {
+      background-color: #e1251b;
+      color: #fff !important;
+      border-radius: 15px;
+      padding: 0px 20px;
+    }
+    .selected_content {
+      color: #e1251b !important;
+    }
+    // }
   }
 }
 </style>
