@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-// const GoodsList=()=>import("../views/GoodsList/GoodsList")
+const GoodsList = () => import("../views/GoodsList/GoodsList");
 // const Detail=()=>import("../views/Goods/Detail")
 // const Login=()=>import("../views/Login/Login")
 // const Cart=()=>import("../views/Cart/Cart")
@@ -16,15 +16,15 @@ const routes = [
       title: "慕西商城首页",
     },
   },
-  // {
-  //   // 这个问号?的意思是这个参数你可以传也可以不传
-  //   path: '/goods_list/:keyword/:page/:order?',
-  //   name: 'GoodsList',
-  //   component: GoodsList,
-  // 	meta: {
-  // 		title:"商品列表页"
-  // 	}
-  // },
+  {
+    // 这个问号?的意思是这个参数你可以传也可以不传
+    path: "/goods_list/:keyword/:page/:order?",
+    name: "GoodsList",
+    component: GoodsList,
+    meta: {
+      title: "商品列表页",
+    },
+  },
   // {
   // 	  // 这个问号?的意思是这个参数你可以传也可以不传
   //   path: '/detail/:sku_id',

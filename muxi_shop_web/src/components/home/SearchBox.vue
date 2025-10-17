@@ -2,7 +2,7 @@
   <div class="sbox">
     <div class="content">
       <input v-model="text" class="sinp" placeholder="电脑" type="text" />
-      <div class="sicon">
+      <div @click="searchgoods" class="sicon">
         <el-icon size="20" color="#FFFFFF">
           <Search></Search>
         </el-icon>
@@ -25,6 +25,9 @@
 <script setup>
 import { ref } from "vue";
 import ShopCat from "./ShopCat.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const hotwords = ref([
   {
     word: "女装",
@@ -48,6 +51,15 @@ const hotwords = ref([
   },
 ]);
 let text = ref("");
+const searchgoods = () => {
+  let kw = text.value;
+  let page = 1;
+  console.log("搜索商品：" + text.value);
+  if (kw.trim() === "") {
+    kw = "电脑";
+  }
+  router.push(`/goods_list/${kw}/1`);
+};
 </script>
 <style scoped lang="scss">
 .sbox {
@@ -55,6 +67,7 @@ let text = ref("");
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   .content {
     width: 550px;
     height: 35px;
@@ -67,6 +80,8 @@ let text = ref("");
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      position: absolute;
+      bottom: -40px;
       .witem {
         color: #999999;
         margin-right: 5px;
