@@ -37,7 +37,7 @@ let page = ref(1);
 let cango = ref(true);
 const getCategoryGoodsData = (c, p) => {
   getCategoryGoods(c, p).then((res) => {
-    let data = res.data;
+    let data = res?.data??{};
     let list = [];
     if (data.length > 0) {
       list = data.map((item) => {

@@ -12,6 +12,7 @@
           v-for="item in hotwords"
           :class="{ active: item.active }"
           class="witem"
+           @click="changeword(item)"
         >
           {{ item.word }}
         </div>
@@ -52,6 +53,7 @@ const hotwords = ref([
 ]);
 let text = ref("");
 const searchgoods = () => {
+  // text.value = str;
   let kw = text.value;
   let page = 1;
   console.log("搜索商品：" + text.value);
@@ -59,6 +61,14 @@ const searchgoods = () => {
     kw = "电脑";
   }
   router.push(`/goods_list/${kw}/1`);
+};
+const changeword = (item) => {
+  hotwords.value.forEach((word) => {
+    word.active = false;
+  });
+  item.active = true;
+  text.value = item.word;
+  searchgoods();
 };
 </script>
 <style scoped lang="scss">
