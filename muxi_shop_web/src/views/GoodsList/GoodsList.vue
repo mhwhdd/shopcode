@@ -33,6 +33,7 @@
           v-for="(good, index) in lists"
           :class="{ m: (index + 1) % 5 != 0 }"
           class="gbitem"
+          @click="toGoodsDetail(good.sku_id)"
         >
           <div class="imgbox">
             <img :src="good.image" alt="" srcset="" />
@@ -64,6 +65,7 @@ import Header from "@/components/home/Header.vue";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getGoodsListData } from "@/network/goods.js";
+import { toGoodsDetail } from "@/utils/goods.js";
 const route = useRouter();
 
 let gs = ref([
@@ -88,7 +90,13 @@ let keyword = ref("电脑");
 let order = ref(1);
 let lists = ref([]);
 let cango = ref(true);
-
+// const toGoodsDetail = (good) => {
+//   let sku_id = good.sku_id;
+//   console.log("跳转商品详情", good);
+//   // route.push(`detail/${sku_id}`);
+//   // route.push("/goods_detail/123456");
+//   window.open("/detail/" + sku_id);
+// };
 const ground = (g) => {
   for (let i in gs.value) {
     gs.value[i].active = false;

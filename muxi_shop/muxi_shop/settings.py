@@ -91,32 +91,32 @@ WSGI_APPLICATION = 'muxi_shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'muxi_shop',
-#         'USER': 'admin',
-#         'PASSWORD': '123',
-#         'HOST': '192.168.1.176',
-#         'PORT': '3306',
-#         # 'OPTIONS': {
-#         #     'charset': 'utf8mb4',  # 明确设置字符集
-#         # },
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'muxi_shop',
-        'USER': 'admin1',
+        'USER': 'admin',
         'PASSWORD': '123',
-        'HOST': '192.168.0.104',
+        'HOST': '192.168.1.176',
         'PORT': '3306',
         # 'OPTIONS': {
         #     'charset': 'utf8mb4',  # 明确设置字符集
         # },
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'muxi_shop',
+#         'USER': 'admin1',
+#         'PASSWORD': '123',
+#         'HOST': '192.168.0.104',
+#         'PORT': '3306',
+#         # 'OPTIONS': {
+#         #     'charset': 'utf8mb4',  # 明确设置字符集
+#         # },
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

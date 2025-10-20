@@ -49,7 +49,6 @@ class GoodsFindAPIView(APIView):
         return ResponseMessage.GoodsResponse.success(result.data)
 class GoodsSearchAPIView(APIView):
     def get(self, request,keyword,page,order_by):
-        pass
         """
             # SELECT r.comment_count,g.name,g.p_price,g.shop_name,g.sku_id FROM goods g
             # LEFT JOIN
@@ -95,3 +94,11 @@ class DecimalEncoder(json.JSONEncoder):
             return float(o)
         elif isinstance(o, datetime):
             return o.strftime("%Y-%m-%d %H:%M:%S")
+
+class GoodsSearchDataCountAPIView(APIView):
+    def get(self, request,sku_id):
+        goods_data = Goods.objects.filter(sku_id=sku_id).all()
+        print("goods_data==={}".format(goods_data))
+        result = GoodsSerializer(instance=goods_data)
+
+        return ResponseMessage.GoodsResponse.success(result.data)

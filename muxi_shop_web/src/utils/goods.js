@@ -2,8 +2,8 @@ import { addCart } from "@/network/cart.js";
 import store from "@/store";
 
 export function toGoodsDetail(skuId) {
-  // window.open("/detail/"+skuId)
-  window.open(skuId);
+  window.open("/detail/" + skuId);
+  // window.open(skuId);
 }
 
 export function addCartData(skuId, nums, isDelete = 0) {
@@ -19,5 +19,10 @@ export function addCartData(skuId, nums, isDelete = 0) {
       alert(res.data);
     }
     store.dispatch("updateCart");
+  });
+}
+export function getGoodsDetail(skuId) {
+  return request({
+    url: "/goods/" + skuId,
   });
 }

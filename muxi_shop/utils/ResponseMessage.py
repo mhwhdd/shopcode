@@ -73,3 +73,20 @@ class UserResponse():
     def other(data):
         result = {"status": 4002, "data": data}
         return JsonResponse(result, safe=False)
+# 评论相关
+class CommentResponse():
+
+    @staticmethod
+    def success(data):
+        result = {"status":5000,"data":data}
+        return JsonResponse(result, safe=False)
+
+    @staticmethod
+    def failed(data):
+        result = {"status": 5001, "data": data}
+        return JsonResponse(result, safe=False)
+
+    @staticmethod
+    def other(data):
+        result = {"status": 5002, "data": data}
+        return JsonResponse(result, safe=False)
