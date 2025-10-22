@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 const GoodsList = () => import("../views/GoodsList/GoodsList");
 const Detail = () => import("../views/Goods/Detail");
-// const Login=()=>import("../views/Login/Login")
+const Login = () => import("../views/Login/Login");
 // const Cart=()=>import("../views/Cart/Cart")
 // const Order=()=>import("../views/Order/Order")
 // const OrderPay=()=>import("../views/Order/OrderPay")
@@ -35,15 +35,15 @@ const routes = [
       // isAuthRequired:true
     },
   },
-  // {
-  // 	  // 这个问号?的意思是这个参数你可以传也可以不传
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: Login,
-  // 	meta: {
-  // 		title:"欢迎登录"
-  // 	}
-  // },
+  {
+    // 这个问号?的意思是这个参数你可以传也可以不传
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: {
+      title: "欢迎登录",
+    },
+  },
   // {
   //   path: '/cart/detail',
   //   name: 'Cart',

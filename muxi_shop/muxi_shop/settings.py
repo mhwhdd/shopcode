@@ -91,19 +91,19 @@ WSGI_APPLICATION = 'muxi_shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'muxi_shop',
-        'USER': 'admin',
-        'PASSWORD': '123',
-        'HOST': '192.168.1.176',
-        'PORT': '3306',
-        # 'OPTIONS': {
-        #     'charset': 'utf8mb4',  # 明确设置字符集
-        # },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'muxi_shop',
+#         'USER': 'admin',
+#         'PASSWORD': '123',
+#         'HOST': '192.168.1.176',
+#         'PORT': '3306',
+#         # 'OPTIONS': {
+#         #     'charset': 'utf8mb4',  # 明确设置字符集
+#         # },
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -163,4 +163,45 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 静态文件服务器配置
-IMAGE_URL = "http://localhost:8000/static/product_images/"
+# IMAGE_URL = "http://localhost:8000/static/product_images/"
+# 全局的token验证配置
+REST_FRAMEWORK = {
+    # "DEFAULT_AUTHENTICATION_CLASSES":['utils.jwt_auth.JwtQueryParamAuthentication']
+    "DEFAULT_AUTHENTICATION_CLASSES":['utils.jwt_auth.JwtHeaderAuthentication']
+}
+# 支付宝沙箱环境配置
+APPID="2021000121675750"
+ALI_PUB_KEY_PATH=os.path.join(BASE_DIR,"apps/pay/keys/alipay_key.txt")
+PRIVATE_KEY_PATH=os.path.join(BASE_DIR,"apps/pay/keys/private_key.txt")
+# 异步接收rul  post请求
+# APP_NOTIFY_URL="http://127.0.0.1:8000/pay/alipay/return"
+# 同步接收url，就是用户在页面上支付成功之后，然后就跳转的页面  get请求
+# RETURN_URL="http://127.0.0.1:8000/pay/alipay/return"
+# 是否是开发环境
+ALIPAY_DEBUG=True
+
+"""
+http://127.0.0.1:8000/alipay/return?
+charset=utf-8&out_trade_no=123&
+method=alipay.trade.page.pay.return&
+total_amount=1.00&
+sign=DQ8nAUEZY%2FO74BfSpwAWllD3GqCZSSKlNUXT7cHOdzwmj%2FcC0P6edBkSFq%2F9QYFCje3er5NDRhF8LDJd4VIgGqv1UilHr1phCUNWwQLl%2BByum%2F9BZx4471eV6U8F4JFUy7wsbVh%2BWAN22i8WqKpqEi21Tno0QMfpIFzdIiw%2B9SfDq7rq%2FUPOlYZKYlYIWBVLn4UE3dHltSRurUUhw9%2FQv%2BDBMyV4XCubbxISDRzdaPxgcX1blUl82CWlOe%2FPBzSgspQSSSSKTmciwG4jIMxznUq22go1vQ5V%2BVTNRtMOrzXxHvd6tfCvWgv4cyE73%2BRcSkoYNvNFk7NtlBQ3m8r%2Buw%3D%3D&
+trade_no=2023060122001438330501983230&
+auth_app_id=2021000121675750&
+version=1.0&
+app_id=2021000121675750&
+sign_type=RSA2&seller_id=2088621993710705&
+timestamp=2023-06-01+15%3A08%3A13
+
+
+"""
+# 做环境区分的代码
+CURRENT_ENV = "dev"
+# 如果这样写，你需要在你的运行环境中，设置一个环境变量CURRENT_ENV，并把它的值对应设置成dev或者是test,或者是prod
+# CURRENT_ENV = os.getenv("CURRENT_ENV","dev")
+if CURRENT_ENV == "dev":
+    from .settings_dev import *
+elif CURRENT_ENV == "test":
+    from .settings_test import *
+elif CURRENT_ENV == "prod":
+    from .settings_prod import *
